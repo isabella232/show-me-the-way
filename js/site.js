@@ -15,8 +15,6 @@ var ignore = ['bot-mode'];
 
 var paused = false,
 
-    BING_KEY = 'Arzdiw4nlOJzRwOz__qailc8NiR31Tt51dN2D7cm57NrnceZnCpgOkmJhNpGoppU',
-
     map = L.map('map', {
         zoomControl: false,
         dragging: false,
@@ -25,7 +23,9 @@ var paused = false,
         boxZoom: false
     }).setView([51.505, -0.09], 13),
 
-    bing = new L.BingLayer(BING_KEY, 'Aerial').addTo(map),
+    mapbox = L.tileLayer('http://a.tiles.mapbox.com/v3/tmcw.map-6dowp2i8/{z}/{x}/{y}.jpg70', {
+        maxZoom: 15
+    }).addTo(map),
 
     overview_map = L.map('overview_map', {
         zoomControl: false,
@@ -171,3 +171,4 @@ function drawWay(change, cb) {
 }
 
 doDrawWay();
+
