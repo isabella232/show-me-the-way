@@ -8,8 +8,7 @@ if (location.hash) {
     bboxString = location.hash.replace('#', '').split(',');
 }
 
-var nominatim_tmpl = 'http://nominatim.openstreetmap.org/reverse?format=json' +
-    '&lat={lat}&lon={lon}&zoom=5';
+var nominatim_tmpl = 'http://api.tiles.mapbox.com/v3/tmcw.map-6dowp2i8/geocode/{lon},{lat}.json';
 
 var ignore = ['bot-mode'];
 
@@ -64,10 +63,15 @@ function showLocation(ll) {
         url: nominatim_tmpl
             .replace('{lat}', ll.lat)
             .replace('{lon}', ll.lng),
+        crossOrigin: true,
         type: 'json'
     }, function(resp) {
+        if (!resp.results || !resp.results.length) return;
+        var nice_name = resp.results[0].map(function(r) {
+            return r.name;
+        }).join(', ');
         document.getElementById('reverse-location').innerHTML =
-            '' + resp.display_name + '';
+            '' + nice_name + '';
     });
 }
 
@@ -120,6 +124,16 @@ function setTagText(change) {
     return change;
 }
 
+var lastLocation = L.latLng(0, 0);
+
+function farFromLast(c) {
+    try {
+        return lastLocation.distanceTo(c) > 1000;
+    } finally {
+        lastLocation = c;
+    }
+}
+
 function drawWay(change, cb) {
     pruneLines();
 
@@ -130,7 +144,7 @@ function drawWay(change, cb) {
         new L.LatLng(way.bounds[2], way.bounds[3]),
         new L.LatLng(way.bounds[0], way.bounds[1]));
 
-    showLocation(bounds.getCenter());
+    if (farFromLast(bounds.getCenter())) showLocation(bounds.getCenter());
 
     var timedate = moment(change.neu.timestamp);
     change.timetext = timedate.fromNow();
