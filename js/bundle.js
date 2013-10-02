@@ -36,7 +36,7 @@ var paused = false,
         boxZoom: false
     }).setView([51.505, -0.09], 1),
 
-    osm = new L.TileLayer('http://a.tiles.mapbox.com/v3/saman.map-f8nluy8d/{z}/{x}/{y}.jpg70', {
+    osm = new L.TileLayer('https://a.tiles.mapbox.com/v3/saman.map-f8nluy8d/{z}/{x}/{y}.jpg70', {
         minZoom: 4,
         maxZoom: 8,
         attribution: '<a href="http://mapbox.com/about/maps/">Terms &amp; Conditions</a>'
