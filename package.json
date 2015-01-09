@@ -10,10 +10,13 @@
   "author": "",
   "license": "BSD",
   "dependencies": {
-    "osm-stream": "0.0.9",
+    "osm-stream": "0.0.11",
     "ration": "0.0.0",
     "underscore": "~1.4.4",
     "reqwest": "~0.7.2",
     "moment": "~2.0.0"
+  },
+  "devDependencies": {
+    "browserify": "^8.1.0"
   }
 }

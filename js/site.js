@@ -4,14 +4,10 @@ var osmStream = require('osm-stream'),
     _ = require('underscore');
 
 var bboxString = ["-90.0", "-180.0", "90.0", "180.0"];
-if (location.hash) {
-    bboxString = location.hash.replace('#', '').split(',');
-}
+if (location.hash) bboxString = location.hash.replace('#', '').split(',');
 
 var nominatim_tmpl = 'https://api.tiles.mapbox.com/v3/tmcw.map-6dowp2i8/geocode/{lon},{lat}.json';
-
 var ignore = ['bot-mode'];
-
 var paused = false,
 
     map = L.map('map', {
